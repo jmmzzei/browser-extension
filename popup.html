@@ -4,9 +4,24 @@
 <html>
   <body>
     <div class="container">
-        <h1>Save It</h1>
-        <button id="btn">Add to spreadsheet</button>
+      <h1>Save It</h1>
+
+      <p id="showDestinationContainer">Agregar destino</p>
+      <div class="destinationContainer">
+        <div class="destinationTitleContainer">
+          <p>Add destination</p>
+          <p id="hideDestinationContainer">x</p>
+        </div>
+        <form accept-charset="utf-8" id="destination">
+        <input type="text" id="destination" placeholder="London"/>
+        <input type="submit" value="Add">
+        </form>
       </div>
+
+    </div>
+
+    <button id="btn">Add to spreadsheet</button>
+
     </div>
   </body>
 </html>
