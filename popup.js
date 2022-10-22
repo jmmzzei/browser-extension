@@ -2,25 +2,35 @@ import { getActiveTabId } from './utils.js'
 
 const div = document.getElementsByTagName('div')[0]
 const btn = document.getElementById('btn')
+
 async function addOption() {
   const activeTabId = await getActiveTabId()
-  chrome.tabs.sendMessage(
-    activeTabId,
-    {
-      val: 'VAL',
+
+  const option = {
+    type: 'ADD',
+    location: {
+      name: 'House 1',
+      address: '2 not street, London, England',
+      price: '202',
+      from: '20/10/2022',
+      to: '20/12/2023',
     },
-    function (response) {
-      const p = document.createElement('p')
-      p.textContent = response
-      div.append(p)
-    },
-  )
+  }
+
+  chrome.tabs.sendMessage(activeTabId, option, function (response) {
+    const p = document.createElement('p')
+    p.textContent = response
+    div.append(p)
+  })
 }
+
 btn.addEventListener('click', addOption)
 
 const destinationForm = document.getElementById('destination')
 function addDestination(e) {
   e.preventDefault()
+  const destinationInput = document.getElementById('destinationInput')
+  destinationInput.value = ''
   const p = document.createElement('p')
   p.textContent = 'destination added'
   div.append(p)
