@@ -1,10 +1,10 @@
-import { getActiveTabId } from './utils.js'
+import { getActiveTab } from './utils.js'
 
 const div = document.getElementsByTagName('div')[0]
 const btn = document.getElementById('btn')
 
 async function addOption() {
-  const activeTabId = await getActiveTabId()
+  const activeTab = await getActiveTab()
 
   const option = {
     type: 'ADD',
@@ -17,7 +17,7 @@ async function addOption() {
     },
   }
 
-  chrome.tabs.sendMessage(activeTabId, option, function (response) {
+  chrome.tabs.sendMessage(activeTab.id, option, function (response) {
     const p = document.createElement('p')
     p.textContent = response
     div.append(p)
