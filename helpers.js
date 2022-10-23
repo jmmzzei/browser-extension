@@ -8,6 +8,8 @@ const selectors = {
   to: '#hp_availability_style_changes > div.sb-searchbox__outer > form > div > div.xp__dates.xp__group > div.xp__dates-inner > div:nth-child(3) > div > div > div > div > div.sb-date-field__display',
 }
 
+const SELECTED_PROPERTIES = ['name', 'address', 'price', 'from', 'to']
+
 function getSelector(key) {
   return selectors[key]
 }
