@@ -10,7 +10,7 @@
         "https://developer.chrome.com/docs/extensions/*",
         "https://developer.chrome.com/docs/webstore/*"
       ],
-      "js": ["contentScript.js"]
+      "js": ["api/api.js", "contentScript.js"]
     }
   ],
   "background": {

@@ -24,19 +24,15 @@ function insertElement(type) {
 }
 
 chrome.runtime.onMessage.addListener(async (obj, sender, response) => {
-  const { type } = obj
+  const { type, location } = obj
 
   if (type === 'ADD') {
-    const { location } = obj
-
-    await chrome.storage.local.set({
-      [location.name]: location,
-    })
-
-    response('success')
-
-    const storage = await chrome.storage.local.get()
-
-    insertElement(JSON.stringify(storage))
+    await saveLocation(location)
   }
+
+  const storage = await getAllLocations()
+
+  insertElement(JSON.stringify(storage))
+
+  response('success')
 })

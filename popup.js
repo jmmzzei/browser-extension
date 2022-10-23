@@ -9,7 +9,7 @@ async function addOption() {
   const option = {
     type: 'ADD',
     location: {
-      name: 'House 1',
+      name: 'House 2',
       address: '2 not street, London, England',
       price: '202',
       from: '20/10/2022',
