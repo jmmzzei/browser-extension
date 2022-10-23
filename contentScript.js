@@ -1,38 +1,51 @@
-const article = document.querySelector('article')
+function getDataFromPage() {
+  const address = document.querySelector(
+    '#showMap2 > span.hp_address_subtitle.js-hp_address_subtitle.jq_tooltip',
+  ).textContent
 
-// `document.querySelector` may return null if the selector doesn't match anything.
-function insertElement(type) {
-  if (article) {
-    const text = article.textContent
-    const wordMatchRegExp = /[^\s]+/g // Regular expression
-    const words = text.matchAll(wordMatchRegExp)
-    // matchAll returns an iterator, convert to array to get word count
-    const wordCount = [...words].length
-    const readingTime = Math.round(wordCount / 200)
-    const badge = document.createElement('p')
-    // Use the same styling as the publish information in an article's header
-    badge.classList.add('color-secondary-text', 'type--caption')
-    badge.textContent = `⏱️ ${readingTime} min read ${type}`
+  const name = document.querySelector(
+    '#hp_hotel_name > div > div > h2',
+  ).textContent
 
-    // Support for API reference docs
-    const heading = article.querySelector('h1')
-    // Support for article docs with date
-    const date = article.querySelector('time')?.parentNode
+  const price = document.querySelector(
+    '#hprt-table > tbody > tr.js-rt-block-row.e2e-hprt-table-row.hprt-table-cheapest-block.hprt-table-cheapest-block-fix.js-hprt-table-cheapest-block > td.hp-price-left-align.hprt-table-cell.hprt-table-cell-price > div > div.prco-wrapper.bui-price-display.prco-sr-default-assembly-wrapper > div:nth-child(1) > div:nth-child(2) > div > span.prco-valign-middle-helper',
+  ).textContent
 
-    ;(date ?? heading).insertAdjacentElement('afterend', badge)
+  const from = document.querySelector(
+    '#hp_availability_style_changes > div.sb-searchbox__outer > form > div > div.xp__dates.xp__group > div.xp__dates-inner > div:nth-child(2) > div > div > div > div > div.sb-date-field__display',
+  ).textContent
+
+  const to = document.querySelector(
+    '#hp_availability_style_changes > div.sb-searchbox__outer > form > div > div.xp__dates.xp__group > div.xp__dates-inner > div:nth-child(3) > div > div > div > div > div.sb-date-field__display',
+  ).textContent
+
+  return {
+    name,
+    address,
+    from,
+    to,
+    price,
   }
 }
 
+const address = document.querySelector(
+  '#showMap2 > span.hp_address_subtitle.js-hp_address_subtitle.jq_tooltip',
+)
+
 chrome.runtime.onMessage.addListener(async (obj, sender, response) => {
-  const { type, location } = obj
+  const { type } = obj
+
+  let location = getDataFromPage()
+
+  const p = document.createElement('p')
+  p.textContent = JSON.stringify(location)
+  address.insertAdjacentElement('afterend', p)
 
   if (type === 'ADD') {
     await saveLocation(location)
   }
 
   const storage = await getAllLocations()
-
-  insertElement(JSON.stringify(storage))
 
   response('success')
 })

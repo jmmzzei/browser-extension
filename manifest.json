@@ -6,10 +6,7 @@
   "permissions": ["storage", "activeTab", "tabs"],
   "content_scripts": [
     {
-      "matches": [
-        "https://developer.chrome.com/docs/extensions/*",
-        "https://developer.chrome.com/docs/webstore/*"
-      ],
+      "matches": ["https://www.booking.com/hotel/*"],
       "js": ["api/api.js", "contentScript.js"]
     }
   ],
